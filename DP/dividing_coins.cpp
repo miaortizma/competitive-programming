@@ -24,31 +24,21 @@ int main()
 		memset(dp, false, sizeof(dp));
 		for(int i = 1; i <= m; i++){
 			for(int j = 1; j <= s/2 + 1; j++){
-				dp[i][j] = dp[i-1][j];
-				if(dp[i-1][j] && j+arr[i] <= s/2+1){
-					dp[i-1][j+arr[i]] = true;
+				dp[i][j] = dp[i-1][j] || dp[i][j];
+				bool a = j+arr[i] <= s/2+1;
+				if(dp[i-1][j] && a){
+					dp[i][j+arr[i]] = true;
 				}
+				
 			}
 			dp[i][arr[i]] = true;
-			for(int j = 1; j <= s/2+1; j++){
-				cout << j << '\t';
-			}
-			cout << '\n';
-			for(int i = 1;  i <= m; i++){
-				for(int j = 1; j <= s/2+1; j++){
-					cout << dp[i][j] << '\t';
-				}
-				cout << '\n';
-			}
 		}
-		
-			
 		int ans = s;
 		for(int i = s/2 + 1; i >= 1; i--){
 			if(dp[m][i]){
 				int a = (s - (s-i));
 				int b = (s-i);
-				cout << a << ' ' << b << '\n';
+				//cout << a << ' ' << b << '\n';
 				ans = min(ans, abs(a - b));
 			} 
 		}
