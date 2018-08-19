@@ -29,7 +29,6 @@ int main()
 				if(dp[i-1][j] && a){
 					dp[i][j+arr[i]] = true;
 				}
-				
 			}
 			dp[i][arr[i]] = true;
 		}
@@ -38,9 +37,8 @@ int main()
 			if(dp[m][i]){
 				int a = (s - (s-i));
 				int b = (s-i);
-				//cout << a << ' ' << b << '\n';
 				ans = min(ans, abs(a - b));
-			} 
+			}
 		}
 		cout << ans << '\n';
 	}

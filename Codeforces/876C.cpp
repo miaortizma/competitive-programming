@@ -24,13 +24,14 @@ vector<int> solve(int n){
 		b/=10;
 		k++;
 	}
+	cout << k << '\n';
 	vector<int> ans;
 	for(int i = max(1,n - 9*k); i < n; i++){
 		if(sum(i) + i == n){
 			ans.push_back(i);
 		}
 	}
-	
+
 	return ans;
 }
 
@@ -44,27 +45,10 @@ int main()
 	ios::sync_with_stdio(false);cin.tie(NULL);
 	int n;
 	cin >> n;
-//	unordered_map<int,vector<int>> freq;
-//	for(int i = 1; i < 10000000; i++){
-//		freq[sum(i) + i].push_back(i);
-//	}
-//	for(auto x : freq){
-//		vector<int> ans;
-//		if(	(ans = solve(x.first)).size() < x.second.size()){
-//			cout << "Found \n";
-//			cout << x.first << '\n';
-//			cout << x.second.size() << '\n';
-//			for(auto y : x.second){
-//				cout << y << ' ';
-//			}cout << '\n';
-		
-//		}
-//	}
 	vector<int> ans = solve(n);
 	cout << ans.size() << '\n';
 	for(int i = 0; i < ans.size(); i++){
-			cout << ans[i] << '\n'; 
+			cout << ans[i] << '\n';
 	}
 	return 0;
 }
-
