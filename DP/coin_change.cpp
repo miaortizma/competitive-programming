@@ -11,9 +11,9 @@ using namespace std;
 
 const int nmax = 30000;
 
-int dp[nmax+1];
+ll dp[nmax+1];
 
-int coins[] = {1,5,10,25,50};
+ll coins[] = {1,5,10,25,50};
 
 void calc(){
 	dp[0] = 1;
@@ -32,13 +32,12 @@ int main()
 	int n;
 	calc();
 	while(cin >> n){
-		int ans = dp[n];
+		ll ans = dp[n];
 		if(ans == 1){
 			cout << "There is only 1 way to produce " << n << " cents change.\n";
 		}else{
 			cout << "There are " << ans << " ways to produce " << n << " cents change.\n";
 		}
-		cout << dp[n] << '\n';
 	}
 	return 0;
 }
