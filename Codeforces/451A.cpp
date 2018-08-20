@@ -9,6 +9,14 @@ using namespace std;
 #endif
 #define _DO_(x) if(DEBUG) x
 
+bool rec(int col, int row){
+	if(col == 0 && row == 0){
+		return false;
+	}else{
+		return !rec();
+	}
+}
+
 int main()
 {
 	ios::sync_with_stdio(false);cin.tie(NULL);
@@ -16,5 +24,10 @@ int main()
 		freopen("in.txt","r",stdin);
 		freopen("out.txt","w",stdout);
 	#endif
+	int n, m;
+	cin >> n >> m;
+	bool moves[n*m+1];
+	for(int i = 2; i < )
+
 	return 0;
 }

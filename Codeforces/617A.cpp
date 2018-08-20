@@ -12,9 +12,13 @@ using namespace std;
 int main()
 {
 	ios::sync_with_stdio(false);cin.tie(NULL);
-	#ifdef PAPITAS
-		freopen("in.txt","r",stdin);
-		freopen("out.txt","w",stdout);
-	#endif
+	int x;
+	cin >> x;
+	int left = x%5;
+	int ans = x/5;
+	if(left){
+		ans++;
+	}
+	cout << ans;
 	return 0;
 }

@@ -41,7 +41,7 @@ int main()
 		memset(dp, 0, sizeof(dp));
 		int arr[n];
 		for(int i = 0; i < n; i++) cin >> arr[i];
-		
+
 		for(int i = 1; i <= n; i++){
 			int val = arr[i-1];
 			for(int j = 1; j <= W; j++){
@@ -55,7 +55,7 @@ int main()
 		}
 		/*for(int j = 1; j <= W; j++){
 			for(int i = 1; i <= n; i++){
-				cout << choose[i][j] << ' ';	
+				cout << choose[i][j] << ' ';
 			}
 			cout << '\n';
 		}*/
@@ -67,4 +67,3 @@ int main()
 	}
 	return 0;
 }
-
