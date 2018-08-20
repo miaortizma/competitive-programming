@@ -52,4 +52,3 @@ int main()
 	}
 	return 0;
 }
->>>>>>> refs/remotes/origin/master:Codeforces/876C.cpp
