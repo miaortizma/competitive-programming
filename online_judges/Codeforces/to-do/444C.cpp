@@ -9,11 +9,43 @@ using namespace std;
 #endif
 #define _DO_(x) if(DEBUG) x
 
-const int NMAX = (int)1e5;
+const int nmax = 1e5;
+int n, m, l, r, q, c;
 
-map<int,int> test;
-map<int,int>::iterator it;
-int n, m, S, t, l, r;
+int len = ceil(sqrt(nmax));
+
+int d[len+10];
+int c[len+10];
+int b[nmax+10];
+int a[nmax+10];
+
+void paint(int l, int r, int c){
+	int L = l/len;
+	int R = r/len;
+	for(int i = l; i <= r; ){
+		if(i % len == 0 && i + len - 1 <= r ){
+			d[i/len] += abs(c[i/len] - c)*len;
+			c[i/len] = c;
+			i += len;
+		}else{
+			b[i] += abs(a[i] - c);
+			d[i/len] += abs(a[i] - c);
+			a[i] = c;
+			i++;
+		}
+	}
+}
+
+int query(int l, int r){
+	int ans = 0;
+	for(int i = l; i <= r; ){
+		if(i % len == 0 && i + len - 1 <= r ){
+			
+		}else{
+		}
+	}
+}
+
 
 int main()
 {
@@ -25,25 +57,17 @@ int main()
 	cout << fixed << showpoint;
 	cout << setprecision(3);
 	cin >> n >> m;
-	S = sqrt(n);
-	while(m--){
-		cin >> t;
-		switch(t){
-			case 1:{
-				cin >> l >> r >> t;		
-				break;
-			}
-			case 2:{
-				cin >> l >> r;
-				break;
-			}
+	cout << BLC << '\n';
+	while(m){
+		cin >> q >> l >> r;
+		l--;
+		r--;
+		if(q == 1){
+			cin >> c;
+			paint(l, r, c);
+		}else{
+			query(l, r);
 		}
-	}
-	for(auto &x: test){
-		cout << x.first << ' ' << x.second << '\n';
-	}
-	while(m--){
-		
 	}
 	return 0;
 }
