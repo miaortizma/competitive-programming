@@ -3,9 +3,10 @@ SQRT decomposition on array queries
 */
 
 bool cmp(Query A, Query B){
-  if (A.l / S ！= B.l / S) return A.l < B.l;
+  if (A.l / S != B.l / S) return A.l < B.l;
   return A.l / S % 2 ? A.r > B.r : A.r < B.r;
 }
+
 
 for(int i = 0; i < q; i++){
   Query qe = qris[i];
