@@ -1,41 +1,36 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const itn N = 1000;
-int mat[N][N];
+const int N = 1011;
+int M[N][N], dp[N][N];
+
+int sum(int x1, int y1, int x2, int y2) {
+  return M[x2][y2] - M[x2][y1 - 1] - M[x1 - 1][y2] + M[x1 - 1][y1 - 1];
+}
+
+int T, R, C;
+char c;
 
 int main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(NULL);
-  
-  int T;
-  cin >> T;
-
+  // to test
+  scanf("%d", &T);
   while(T--) {
-    int R, C;
-    cin >> R >> C;
-    for (int i = 0; i < R; ++i)
-      for (int j = 0; j < C; ++j)
-        cin >> mat[i][j];
-    
-    for (int i = 0; i < R; ++i) {
-      if (mat[i][0]) {
-        dp[i][0] = 0;
-        dp[i][1] = 1;
-      } else {
-        dp[i][0] = 1;
-        dp[i][1] = 0;
+    scanf("%d %d", &R, &C);
+    for (int i = 1; i <= R; ++i) {
+      for (int j = 1; j <= C; ++j) {
+        do{c=getchar();} while (c != '0' && c != '1');
+        M[i][j] = c - '0' + M[i - 1][j] + M[i][j - 1] - M[i - 1][j - 1];
       }
     }
-
-    for (int i = 1; i < C; ++i) {
-      if (mat[0][i]) {
-         
-      } else {
-
+    int ans = 0;
+    for (int i = 1; i <= R; ++i) {
+      for (int j = 1; j <= C; ++j) {
+        dp[i][j] = max({1, dp[i - 1][j -1] - 1, dp[i - 1][j] - 1, dp[i][j - 1] - 1});
+        while(i + dp[i][j] <= R && j + dp[i][j] <= C && sum(i, j, i + dp[i][j], j + dp[i][j]) <= 1) dp[i][j]++;
+        ans = max(ans, dp[i][j]);
       }
     }
+    printf("%d\n", ans);
   }
-
   return 0;
 }

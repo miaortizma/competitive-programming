@@ -14,8 +14,8 @@ ll gcd(ll a, ll b, ll & x, ll & y){
 	return g;
 }
 
-bool find_any_solution(ll a, ll b, ll c, ll & x0, ll & y0) {
-  ll g = gcd(abs(a), abs(b), x0, y0);
+bool find_any_solution(ll a, ll b, ll c, ll & x0, ll & y0, ll & g) {
+  g = gcd(abs(a), abs(b), x0, y0);
   if (c % g)
     return false;
  
@@ -27,54 +27,82 @@ bool find_any_solution(ll a, ll b, ll c, ll & x0, ll & y0) {
 }
 
 void shift_solution(ll & x, ll & y, ll a, ll b, ll cnt) {
-  printf("Solution %lld %lld Shift: %lld\n", x, y, cnt);
   x += cnt * b;
   y -= cnt * a;
-  printf("Shifted Solution %lld %lld\n", x, y);
 }
 
-ll x, y;
-
-void update_ans(ll & ans, ll val) {
-  if (ans == 0) { 
-    ans = val;
-    cout << x << ' ' << y << '\n';
-    cout << ans << ' ' << val << '\n';
-  } else if (val < ans){
-    ans = val;
-    cout << x << ' ' << y << '\n';
-    cout << ans << ' ' << val << '\n';
+void upAns(ll &ans, ll val, ll n, ll m, ll a, ll k) {
+  if ( (val - n) % m == 0 && (val - k) % a == 0 ) {
+    if (ans == 0)
+      ans = val;
+    else
+      ans = min(ans, val);
   }
 }
 
 void solve (ll n, ll m, ll a, ll k) {
-  ll ans = 0;
-  if (find_any_solution(-m, a, n - k, x, y)) {
-    printf("Any solution\n");
-    printf("%lld %lld\n", x, y);
-    int sign_a = -1;
-    int sign_b = 1;
-    shift_solution(x, y, m, a, -(1 - y) / m);
-    
-    if (y < 0)
-      shift_solution(x, y, m, a, -1);
-    ll bx = x, by = y;
-    cout << bx << ' ' << by << "@\n";
-    for (int i = 0; i < 5; ++i) {
-      shift_solution(x, y, m, a, 1);
-      if (abs(y) > 0)
-        update_ans(ans, k + abs(y) * abs(a));
+  if (m == 0 || a == 0) {
+    if (a == 0) {
+      printf("Impossible\n"); 
+      return;
     }
-    x = bx;
-    y = by;
-    for (int i = 0; i < 5; ++i) {
-      shift_solution(x, y, m, a, -1);
-      if (abs(y) > 0)
-        update_ans(ans, k + abs(y) * abs(a));
+    if (m == 0) {
+      if ((n - k) > 0 && (n - k) % a == 0) {
+        printf("%lld\n", n);
+      } else {
+        printf("Impossible\n");
+      }
     }
-    printf("Ans: %lld\n", ans);
+  }
+    if (n - k > 0 && (n - k) % a == 0) {
+    printf("%lld\n", n);
   } else {
-    printf("Impossible\n");
+    if (n < k) {
+      swap(n, k);
+      swap(m, a);
+    }
+    ll x, y, g, mm = m;
+    //cerr << "m: " << m << " n: " << n << " x: " << x << " y:" << y << "\n";
+    if (find_any_solution(m, a, n - k, x, y, g)) {
+      m /= g;
+      a /= g;
+      ll ans = 0;
+
+      if (abs(x) > 0 && abs(y) > 0) upAns(ans, n + mm * abs(x), n, m, a, k);
+      /*cerr << "m: " << m << " n: " << n << " x: " << x << " y:" << y << "\n";
+      cerr << m * x + a * y << "\n";
+      cerr << "ans: " << ans << "\n\n";*/
+      
+      
+      shift_solution(x, y, m, a, -(x + a - 1) / a);
+      for (int i = 0; i < 3; ++i) {
+        if (abs(x) > 0 && abs(y) > 0) upAns(ans, n + mm * abs(x), n, m, a, k);
+        /*cerr << "m: " << m << " n: " << n << " x: " << x << " y:" << y << "\n";
+        cerr << m * x + a * y << "\n";
+        cerr << "ans: " << ans << "\n\n";*/
+        
+        shift_solution(x, y, m, a, -1);
+      }
+      find_any_solution(m, a, n - k, x, y, g);
+      shift_solution(x, y, m, a, -(x + a - 1) / a);
+      for (int i = 0; i < 3; ++i) {
+        if (abs(x) > 0 && abs(y) > 0) upAns(ans, n + mm * abs(x), n, m, a, k);
+        
+        /*cerr << "m: " << m << " n: " << n << " x: " << x << " y:" << y << "\n";
+        cerr << m * x + a * y << "\n";
+        cerr << "ans: " << ans << "\n\n";*/
+        
+        
+        shift_solution(x, y, m, a, 1);
+      }
+      if (ans == 0) {
+        printf("Impossible\n");
+      } else {
+        printf("%lld\n", ans);
+      }
+    } else {
+      printf("Impossible\n");
+    }
   }
 }
 
