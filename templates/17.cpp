@@ -12,7 +12,6 @@ typedef pair<int, int> pii;
 
 int main()
 {
-  ios_base::sync_with_stdio(0);
-  cin.tie(NULL);
+  cin.tie(0), cout.sync_with_stdio(0);
   return 0;
 }
